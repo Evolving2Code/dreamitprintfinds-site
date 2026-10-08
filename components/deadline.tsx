@@ -11,26 +11,34 @@ const deadlines = [
 function nextDeadline() {
   const now = Date.now();
   const next = deadlines.find((d) => now <= Date.parse(d.until));
-  if (!next) return null;
+  if (!next) return "";
   const days = Math.ceil((Date.parse(next.until) - now) / 86_400_000);
-  return `${next.label}|${next.date}|${days <= 1 ? "last day!" : `${days} days left`}`;
+  const left = days <= 1 ? "last day!" : `${days} days left`;
+  const heat = days <= 3 ? "hot" : "ok";
+  return `${next.label}|${next.date}|${left}|${heat}`;
 }
 
 const subscribe = () => () => {};
 
 export function Deadline() {
   // Computed on the client only, so the prerendered page never shows a stale countdown.
-  const value = useSyncExternalStore(subscribe, nextDeadline, () => null);
-  const [label, date, left] = value?.split("|") ?? [];
+  const value = useSyncExternalStore(subscribe, nextDeadline, () => "");
+  const [label, date, left, heat] = value.split("|");
+  const urgent = heat === "hot";
 
   return (
-    <div className="mb-5 rounded-xl bg-card px-3.5 py-2.5 text-center text-[15px]">
+    <div
+      className={`flex min-h-[52px] items-center justify-center gap-2 rounded-2xl border px-3.5 py-2.5 text-center text-[15px] ${
+        urgent ? "border-accent/50 bg-accent/10 text-text" : "border-line bg-card/80 text-text"
+      }`}
+    >
+      <span aria-hidden="true" className={`inline-block size-1.5 shrink-0 rounded-full ${urgent ? "bg-accent" : "bg-muted"}`} />
       {value ? (
-        <>
+        <span>
           {label}: order by <b className="text-accent">{date}</b> (US) · {left}
-        </>
+        </span>
       ) : (
-        "Made to order · ships in 3–5 days"
+        <span>Made to order · ships in 3–5 days</span>
       )}
     </div>
   );

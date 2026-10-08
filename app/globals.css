@@ -1,18 +1,210 @@
 @import "tailwindcss";
 
 @theme {
-  --color-bg: #111114;
-  --color-card: #1c1c21;
+  --color-bg: #070709;
+  --color-card: #141418;
   --color-line: #2c2c33;
   --color-text: #f5f5f5;
   --color-muted: #a8a8b0;
   --color-accent: #ff8c00;
-  --font-sans: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --font-sans: var(--font-outfit), system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --animate-rise: rise 0.8s cubic-bezier(0.16, 1, 0.3, 1) both;
+  --animate-float: float 9s ease-in-out infinite;
+  --animate-marquee: marquee 28s linear infinite;
+  --animate-ring: ring-pulse 2.6s ease-out infinite;
+  --animate-shine: shine 4.8s ease-in-out infinite;
+  --animate-glow: glow 3.2s ease-in-out infinite;
+}
+
+html {
+  background: var(--color-bg);
 }
 
 body {
+  min-height: 100dvh;
+  overflow-x: hidden;
   background: var(--color-bg);
   color: var(--color-text);
   font-family: var(--font-sans);
   line-height: 1.45;
+}
+
+::selection {
+  background: var(--color-accent);
+  color: var(--color-bg);
+}
+
+/* Cinematic backdrop — CSS only, no canvas or motion libraries. */
+.atmosphere {
+  pointer-events: none;
+  position: fixed;
+  inset: 0;
+  overflow: hidden;
+  z-index: 0;
+}
+
+.atmosphere .glow {
+  position: absolute;
+  left: 50%;
+  top: -8rem;
+  height: 28rem;
+  width: 28rem;
+  translate: -50% 0;
+  border-radius: 999px;
+  background: radial-gradient(circle, rgba(255, 140, 0, 0.32), transparent 68%);
+  filter: blur(8px);
+  animation: float 10s ease-in-out infinite;
+}
+
+.atmosphere .orb {
+  position: absolute;
+  border-radius: 999px;
+  filter: blur(40px);
+  animation: float 11s ease-in-out infinite;
+}
+
+.atmosphere .orb-a {
+  top: 18%;
+  right: -4rem;
+  height: 12rem;
+  width: 12rem;
+  background: rgba(255, 140, 0, 0.16);
+  animation-delay: -3s;
+}
+
+.atmosphere .orb-b {
+  bottom: 12%;
+  left: -5rem;
+  height: 14rem;
+  width: 14rem;
+  background: rgba(255, 80, 0, 0.1);
+  animation-delay: -6s;
+  animation-duration: 13s;
+}
+
+.atmosphere .grain {
+  position: absolute;
+  inset: 0;
+  opacity: 0.045;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)' opacity='.9'/%3E%3C/svg%3E");
+  mix-blend-mode: overlay;
+}
+
+.rise-1 {
+  animation-delay: 0.05s;
+}
+.rise-2 {
+  animation-delay: 0.12s;
+}
+.rise-3 {
+  animation-delay: 0.18s;
+}
+.rise-4 {
+  animation-delay: 0.26s;
+}
+.rise-5 {
+  animation-delay: 0.34s;
+}
+.rise-6 {
+  animation-delay: 0.42s;
+}
+
+.logo-ring {
+  animation: ring-pulse 2.6s ease-out infinite;
+}
+
+.marquee-mask {
+  mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+}
+
+.btn-shine {
+  overflow: hidden;
+}
+
+.btn-shine::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 42%;
+  background: linear-gradient(90deg, transparent, rgb(255 255 255 / 0.28), transparent);
+  animation: shine 4.8s ease-in-out infinite;
+}
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(18px);
+  }
+}
+
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@keyframes ring-pulse {
+  0% {
+    box-shadow: 0 0 0 0 rgb(255 140 0 / 0.5);
+  }
+  70% {
+    box-shadow: 0 0 0 14px rgb(255 140 0 / 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgb(255 140 0 / 0);
+  }
+}
+
+@keyframes shine {
+  0% {
+    transform: translateX(-130%) skewX(-16deg);
+  }
+  22%,
+  100% {
+    transform: translateX(280%) skewX(-16deg);
+  }
+}
+
+@keyframes glow {
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 rgb(255 140 0 / 0.15);
+  }
+  50% {
+    box-shadow: 0 0 28px 2px rgb(255 140 0 / 0.22);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .atmosphere .glow,
+  .atmosphere .orb,
+  .logo-ring,
+  .btn-shine::after,
+  .animate-rise,
+  .animate-marquee,
+  .animate-float,
+  .animate-glow,
+  .animate-ring,
+  .animate-shine {
+    animation: none !important;
+  }
 }
