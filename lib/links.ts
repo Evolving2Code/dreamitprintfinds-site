@@ -7,6 +7,7 @@ export const links = {
   custom:
     "https://www.limitless3dlabs.com/pages/limitless-halloween#shopify-section-template--27388756459809__custom_liquid_Pr87Ej",
   reviews: "https://www.etsy.com/shop/Limitless3DLabs#reviews",
+  etsy: "https://www.etsy.com/shop/Limitless3DLabs",
   sonic: "https://www.limitless3dlabs.com/products/doctor-who-sonic-screwdrivers-cosplay",
   crown: "https://www.limitless3dlabs.com/products/baratheon-crown-game-of-thrones-3d-print",
   hammer: "https://www.limitless3dlabs.com/products/medieval-skull-hammer-costume-weapon",

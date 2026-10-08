@@ -21,15 +21,24 @@ const buttons: {
   title: string;
   note: string;
   primary?: boolean;
-  icon: "shop" | "halloween" | "custom" | "reviews";
+  icon: "shop" | "halloween" | "custom" | "etsy" | "reviews";
 }[] = [
   { slug: "shop", title: "Shop Limitless 3D Labs", note: `Use code ${CODE} for 10% off`, primary: true, icon: "shop" },
   { slug: "halloween", title: "Halloween props & helmets", note: "Everything on this page is orderable", icon: "halloween" },
   { slug: "custom", title: "Request a custom print", note: "Describe your idea and get a quote", icon: "custom" },
+  { slug: "etsy", title: "Shop on Etsy", note: "Limitless 3D Labs on Etsy", icon: "etsy" },
   { slug: "reviews", title: "Read customer reviews", note: "Public reviews on Etsy", icon: "reviews" },
 ];
 
-const picks: { slug: LinkSlug; name: string; price: string; alt: string; src: string; badge?: string }[] = [
+const picks: {
+  slug: LinkSlug;
+  name: string;
+  price: string;
+  alt: string;
+  src: string;
+  badge?: string;
+  object?: string;
+}[] = [
   {
     slug: "sonic",
     name: "Sonic screwdrivers",
@@ -41,16 +50,18 @@ const picks: { slug: LinkSlug; name: string; price: string; alt: string; src: st
     slug: "crown",
     name: "Baratheon crown",
     price: "$40",
-    alt: "3D printed crown",
-    src: "https://cdn.shopify.com/s/files/1/0915/1378/2561/files/Baratheon_Crown_-_Joffrey.jpg?v=1789275039",
+    alt: "3D printed crown on a velvet cushion",
+    src: "/picks/crown.jpg",
+    object: "object-[center_32%]",
   },
   {
     slug: "hammer",
     name: "Medieval skull hammer",
     price: "$85",
-    alt: "3D printed medieval skull hammer",
-    src: "https://cdn.shopify.com/s/files/1/0915/1378/2561/files/il_fullxfull.6498303028_lh3l.jpg?v=1734045392",
+    alt: "3D printed medieval skull hammer on a forge",
+    src: "/picks/hammer.jpg",
     badge: "Halloween",
+    object: "object-[center_42%]",
   },
   {
     slug: "batcat",
@@ -72,9 +83,10 @@ export default function Home() {
 
   return (
     <>
-      <main className="relative z-10 mx-auto w-full max-w-[440px] px-4 pt-7 pb-[7.5rem] sm:max-w-[480px] lg:max-w-[880px] lg:px-6 lg:pb-16">
+      <main className="relative z-10 mx-auto w-full max-w-[440px] px-4 pt-6 pb-[7.5rem] sm:max-w-[480px] lg:max-w-[920px] lg:px-6 lg:pb-16">
+        <div className="lg:mx-auto lg:max-w-[480px]">
         <header className="animate-rise rise-1 text-center">
-          <div className="logo-ring mx-auto size-[5.5rem] overflow-hidden rounded-full ring-2 ring-accent/80 lg:size-28">
+          <div className="logo-ring mx-auto size-[4.75rem] overflow-hidden rounded-full ring-2 ring-accent/80 lg:size-28">
             <Image
               src="/profile.png"
               alt="Dream It Print Finds logo"
@@ -125,15 +137,15 @@ export default function Home() {
           <Deadline />
         </div>
 
-        <div className="grid gap-2.5 lg:grid-cols-2">
-          {buttons.map((b, i) => (
+        <div className="grid gap-2.5">
+          {buttons.map((b) => (
             <a
               key={b.slug}
               href={go(b.slug)}
               className={`group relative block rounded-2xl border p-4 text-center font-bold transition-[transform,background-color,border-color] duration-200 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent active:scale-[0.99] ${
                 b.primary
-                  ? "btn-shine animate-rise rise-4 border-accent bg-accent text-bg lg:col-span-2"
-                  : `animate-rise rise-5 border-line bg-card/90 text-text hover:border-accent/50 ${i === 1 ? "lg:col-span-2" : ""}`
+                  ? "btn-shine animate-rise rise-4 border-accent bg-accent text-bg"
+                  : "animate-rise rise-5 border-line bg-card/90 text-text hover:border-accent/50"
               }`}
             >
               <span className="flex items-center justify-center gap-2">
@@ -146,6 +158,7 @@ export default function Home() {
             </a>
           ))}
         </div>
+        </div>
 
         <section className="animate-rise rise-6 mt-8">
           <div className="mb-3 flex items-end justify-between gap-3">
@@ -153,7 +166,7 @@ export default function Home() {
             <p className="text-[12px] text-muted">Photos © Limitless 3D Labs</p>
           </div>
           <div className="grid grid-cols-2 gap-2.5 lg:grid-cols-4">
-            {picks.map((p) => (
+            {picks.map((p, i) => (
               <a
                 key={p.slug}
                 href={go(p.slug)}
@@ -164,8 +177,9 @@ export default function Home() {
                   alt={p.alt}
                   width={480}
                   height={480}
-                  sizes="(max-width: 480px) 50vw, (max-width: 880px) 33vw, 210px"
-                  className="block aspect-square w-full bg-line object-cover transition-transform duration-500 group-hover:scale-[1.04]"
+                  sizes="(max-width: 480px) 50vw, (max-width: 920px) 25vw, 220px"
+                  priority={i < 2}
+                  className={`block aspect-square w-full bg-line object-cover transition-transform duration-500 group-hover:scale-[1.04] ${p.object ?? ""}`}
                 />
                 <span className="pointer-events-none absolute inset-0 bg-linear-to-t from-black/85 via-black/25 to-transparent" />
                 {p.badge ? (
@@ -182,6 +196,7 @@ export default function Home() {
           </div>
         </section>
 
+        <div className="lg:mx-auto lg:max-w-[480px]">
         <ul className="mt-7 grid grid-cols-3 gap-2 text-center text-[12px] text-muted">
           <li className="rounded-xl border border-line bg-card/60 px-2 py-3">US shipping</li>
           <li className="rounded-xl border border-line bg-card/60 px-2 py-3">Ships in 3–5 days</li>
@@ -208,9 +223,10 @@ export default function Home() {
           </a>
           , which makes and ships every order. Photos © Limitless 3D Labs. US shipping.
         </footer>
+        </div>
       </main>
 
-      <div className="fixed inset-x-0 bottom-0 z-20 border-t border-line/80 bg-bg/85 p-3 backdrop-blur-md lg:hidden supports-backdrop-filter:bg-bg/70">
+      <div className="fixed inset-x-0 bottom-0 z-20 border-t border-line/80 bg-bg/85 px-3 pt-3 pb-[max(0.75rem,env(safe-area-inset-bottom))] backdrop-blur-md lg:hidden supports-[backdrop-filter]:bg-bg/70">
         <a
           href={go("shop")}
           className="flex min-h-12 items-center justify-center rounded-2xl bg-accent px-4 py-3 text-center font-bold text-bg focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
@@ -222,7 +238,13 @@ export default function Home() {
   );
 }
 
-function Icon({ name, className }: { name: "shop" | "halloween" | "custom" | "reviews"; className?: string }) {
+function Icon({
+  name,
+  className,
+}: {
+  name: "shop" | "halloween" | "custom" | "etsy" | "reviews";
+  className?: string;
+}) {
   const common = `size-4 shrink-0 ${className ?? ""}`;
   if (name === "shop") {
     return (
@@ -245,6 +267,13 @@ function Icon({ name, className }: { name: "shop" | "halloween" | "custom" | "re
       <svg viewBox="0 0 24 24" aria-hidden="true" className={common} fill="none" stroke="currentColor" strokeWidth="2">
         <path d="M12 20h9" />
         <path d="M16.5 3.5a2.12 2.12 0 1 1 3 3L7 19l-4 1 1-4 12.5-12.5Z" />
+      </svg>
+    );
+  }
+  if (name === "etsy") {
+    return (
+      <svg viewBox="0 0 24 24" aria-hidden="true" className={common} fill="currentColor">
+        <path d="M6.2 6.8c.4-1.7 1.6-2.6 3.5-2.6h8.1v2.1H10.4c-.7 0-1.1.3-1.2.9v2.4h8.4v2.1H9.2v4.6c0 .7.4 1 1.2 1h6.2c1.4 0 2.2-.7 2.6-2.1l2 .5c-.6 2.6-2.2 3.8-4.8 3.8H9.5c-2.2 0-3.6-1.2-3.6-3.6V6.8h.3Z" />
       </svg>
     );
   }
