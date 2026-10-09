@@ -12,6 +12,10 @@ export const links = {
   crown: "https://www.limitless3dlabs.com/products/baratheon-crown-game-of-thrones-3d-print",
   hammer: "https://www.limitless3dlabs.com/products/medieval-skull-hammer-costume-weapon",
   batcat: "https://www.limitless3dlabs.com/products/batcat-wearable-helmet",
+  raygun: "https://www.limitless3dlabs.com/products/futurama-ray-gun-3d-print",
+  sword: "https://www.limitless3dlabs.com/products/minecraft-sword-life-size",
+  bust: "https://www.limitless3dlabs.com/products/customized-3d-bust-statue",
+  tardis: "https://www.limitless3dlabs.com/products/tardis-3d-print",
 } as const satisfies Record<string, string>;
 
 export type LinkSlug = keyof typeof links;
