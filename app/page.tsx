@@ -1,3 +1,4 @@
+import Link from "next/link";
 import Image from "next/image";
 import { CopyCode } from "@/components/copy-code";
 import { Deadline } from "@/components/deadline";
@@ -221,7 +222,9 @@ export default function Home() {
           <a href={go("shop")} className="underline decoration-line underline-offset-2 hover:text-text">
             Limitless 3D Labs
           </a>
-          , which makes and ships every order. Photos © Limitless 3D Labs. US shipping.
+          , which makes and ships every order. Photos © Limitless 3D Labs. US shipping.{" "}
+          · <Link href="/privacy" className="underline decoration-line underline-offset-2 hover:text-text">Privacy</Link> ·{" "}
+          <Link href="/terms" className="underline decoration-line underline-offset-2 hover:text-text">Terms</Link>
         </footer>
         </div>
       </main>
