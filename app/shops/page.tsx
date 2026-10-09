@@ -196,7 +196,9 @@ export default function Shops() {
           , which makes and ships every order. Photos © Limitless 3D Labs. ·{" "}
           <Link href="/" className="underline decoration-line underline-offset-2 hover:text-text">
             Shop with 10% off
-          </Link>
+          </Link>{" "}
+          · <Link href="/privacy" className="underline decoration-line underline-offset-2 hover:text-text">Privacy</Link> ·{" "}
+          <Link href="/terms" className="underline decoration-line underline-offset-2 hover:text-text">Terms</Link>
         </footer>
       </div>
     </main>
